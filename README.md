@@ -1,4 +1,4 @@
-<img src="./icon.png">
+<img src="https://github.com/iqbal-rashed/pdftoimg-js/raw/main/logo.png">
 
 > IMPORTANT NOTE: `This library is still under testing`, so please test and report issue. your help is much appreciated. Contributors are also welcome!
 
