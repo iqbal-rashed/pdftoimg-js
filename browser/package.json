@@ -1,0 +1,6 @@
+{
+    "name": "pdftoimg-js/browser",
+    "private": true,
+    "main": "../lib/browser/index.js",
+    "types": "../lib/browser/index.d.js"
+}
