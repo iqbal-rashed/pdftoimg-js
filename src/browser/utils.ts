@@ -8,6 +8,9 @@ export const DefaultOptions: OptionsType = {
     scale: 1.0,
 };
 
+export const isBrowser =
+    typeof window !== "undefined" && typeof window.document !== "undefined";
+
 export const GetSrcOptions = (
     src: string | URL | ArrayBuffer | File,
     options?: OptionsType

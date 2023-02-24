@@ -1,5 +1,6 @@
 {
     "name": "pdftoimg-js",
+    "description": "A javascript library that help to convert pdf to img in both platform nodejs and frontend library/framework like React, Nextjs.",
     "version": "0.0.1",
     "license": "MIT",
     "main": "./lib/node/index.js",
@@ -15,6 +16,24 @@
         "build:node": "tsc -p ./configs/tsconfig.node.json",
         "build:browser": "tsc -p ./configs/tsconfig.browser.json"
     },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/iqbal-rashed/pdftoimg-js.git"
+    },
+    "author": "Rashed Iqbal",
+    "bugs": {
+        "url": "https://github.com/iqbal-rashed/pdftoimg-js/issues"
+    },
+    "homepage": "https://github.com/iqbal-rashed/pdftoimg-js#readme",
+    "keywords": [
+        "pdf",
+        "img",
+        "pdfjs",
+        "pdftoimg",
+        "pdftopng",
+        "typescript",
+        "nodejs"
+    ],
     "devDependencies": {
         "@types/node": "^18.14.0",
         "shx": "^0.3.4",

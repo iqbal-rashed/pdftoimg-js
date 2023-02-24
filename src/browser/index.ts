@@ -1,7 +1,7 @@
 import { OptionsType as OpType, ReturnType } from "./types";
 import * as pdfjsLib from "pdfjs-dist";
 import { PageToImgType } from "./types";
-import { GetSrcOptions, base64ToBuffer, rangeToArr } from "./utils";
+import { GetSrcOptions, base64ToBuffer, isBrowser, rangeToArr } from "./utils";
 import { DocumentInitParameters } from "pdfjs-dist/types/src/display/api";
 
 pdfjsLib.GlobalWorkerOptions.workerSrc =
@@ -24,10 +24,22 @@ type SrcType =
  * @param options this is options object
  * @returns Return type
  */
-export async function PdfToImgBrowser<T extends OpType, K extends SrcType>(
-    src: K,
-    options?: T
-): Promise<ReturnType<T, K>> {
+export async function PdfToImgBrowser<
+    T extends OpType,
+    K extends
+        | string
+        | URL
+        | ArrayBuffer
+        | File
+        | FileList
+        | File[]
+        | ArrayBuffer[]
+        | string[]
+        | URL[]
+>(src: K, options?: T): Promise<ReturnType<T, K>> {
+    if (!isBrowser) {
+        throw new Error("You've called wrong function in browser");
+    }
     if (src instanceof FileList || Array.isArray(src)) {
         const resultArr = await Promise.all(
             Array.from(src as any[]).map(async (v) => {
@@ -130,7 +142,19 @@ const PageToImg: PageToImgType = async (pdfDoc, pageNumber, options) => {
     return returnType === "base64" ? image : base64ToBuffer(image);
 };
 
-export const PdfToImg: <T extends OpType, K extends SrcType>(
+export const PdfToImg: <
+    T extends OpType,
+    K extends
+        | string
+        | URL
+        | ArrayBuffer
+        | File
+        | FileList
+        | File[]
+        | ArrayBuffer[]
+        | string[]
+        | URL[]
+>(
     src: K,
     options?: T
 ) => Promise<ReturnType<T, K>> = PdfToImgBrowser;

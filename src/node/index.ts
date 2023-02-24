@@ -4,6 +4,7 @@ import {
     GetSrcOptions,
     NodeCanvasFactory,
     base64ToBuffer,
+    isBrowser,
     rangeToArr,
 } from "./utils";
 import path from "path";
@@ -13,18 +14,20 @@ const pdfjsLib: typeof import("pdfjs-dist") = _pdfjs;
 
 const pdfjsPath = path.dirname(require.resolve("pdfjs-dist/package.json"));
 
-type SrcType = string | URL | Buffer | Buffer[] | string[] | URL[];
-
 /**
  *
  * @param src This are src type
  * @param options this is options object
  * @returns Return type
  */
-export async function PdfToImgNode<T extends OpType, K extends SrcType>(
-    src: K,
-    options?: T
-): Promise<ReturnType<T, K>> {
+export async function PdfToImgNode<
+    T extends OpType,
+    K extends string | URL | Buffer | Buffer[] | string[] | URL[]
+>(src: K, options?: T): Promise<ReturnType<T, K>> {
+    if (isBrowser) {
+        throw new Error("You've called wrong function in nodejs");
+    }
+
     if (Array.isArray(src)) {
         const resultArr = await Promise.all(
             Array.from(src).map(async (v) => {
@@ -123,7 +126,10 @@ const PageToImg: PageToImgType = async (pdfDoc, pageNumber, options) => {
     return returnType === "base64" ? image : base64ToBuffer(image);
 };
 
-export const PdfToImg: <T extends OpType, K extends SrcType>(
+export const PdfToImg: <
+    T extends OpType,
+    K extends string | URL | Buffer | Buffer[] | string[] | URL[]
+>(
     src: K,
     options?: T
 ) => Promise<ReturnType<T, K>> = PdfToImgNode;
