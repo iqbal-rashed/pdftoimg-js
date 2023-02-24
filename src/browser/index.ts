@@ -130,11 +130,9 @@ const PageToImg: PageToImgType = async (pdfDoc, pageNumber, options) => {
     return returnType === "base64" ? image : base64ToBuffer(image);
 };
 
-export const PdfToImg = PdfToImgBrowser;
+export const PdfToImg: <T extends OpType, K extends SrcType>(
+    src: K,
+    options?: T
+) => Promise<ReturnType<T, K>> = PdfToImgBrowser;
 
-const test: File[] = "" as any;
-
-const check = await PdfToImgBrowser(test, {
-    returnType: "buffer",
-    flat: true,
-});
+export default PdfToImg;

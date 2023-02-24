@@ -123,4 +123,9 @@ const PageToImg: PageToImgType = async (pdfDoc, pageNumber, options) => {
     return returnType === "base64" ? image : base64ToBuffer(image);
 };
 
-export const PdfToImg = PdfToImgNode;
+export const PdfToImg: <T extends OpType, K extends SrcType>(
+    src: K,
+    options?: T
+) => Promise<ReturnType<T, K>> = PdfToImgNode;
+
+export default PdfToImg;
