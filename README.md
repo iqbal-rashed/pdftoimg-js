@@ -1,5 +1,7 @@
 <img src="https://github.com/iqbal-rashed/pdftoimg-js/raw/main/logo.png">
 
+> Important Note: This is the first release of the library, so if you encounter any issues, please submit them. Your feedback is greatly appreciated. Contributors are also welcome!
+
 # **PDF TO IMG - _A javascript library_**
 
 [<img src="https://img.shields.io/badge/PDF TO IMG - JS-010101?&style=for-the-badge&logo=Npm"/>](https://www.npmjs.com/package/pdftoimg-js)

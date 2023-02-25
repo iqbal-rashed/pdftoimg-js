@@ -42,7 +42,7 @@ type SrcArray = string[] | Buffer[] | URL[];
 export type ReturnType<T, K> = K extends SrcArray
     ? ArrayReturn<T>
     : T extends { returnType: "buffer" }
-    ? PageReturn<T, ArrayBuffer>
+    ? PageReturn<T, Buffer>
     : T extends { returnType: "base64" }
     ? PageReturn<T, string>
     : PageReturn<T, string>;
