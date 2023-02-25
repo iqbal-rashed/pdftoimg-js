@@ -32,7 +32,8 @@
         "pdftoimg",
         "pdftopng",
         "typescript",
-        "nodejs"
+        "nodejs",
+        "pdfconvertimg"
     ],
     "devDependencies": {
         "@types/node": "^18.14.0",
