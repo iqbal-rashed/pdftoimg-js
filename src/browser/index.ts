@@ -159,4 +159,6 @@ export const PdfToImg: <
     options?: T
 ) => Promise<ReturnType<T, K>> = PdfToImgBrowser;
 
+export interface OptionsType extends OpType {}
+
 export default PdfToImg;

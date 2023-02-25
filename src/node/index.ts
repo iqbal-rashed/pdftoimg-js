@@ -134,4 +134,6 @@ export const PdfToImg: <
     options?: T
 ) => Promise<ReturnType<T, K>> = PdfToImgNode;
 
+export interface OptionsType extends OpType {}
+
 export default PdfToImg;
