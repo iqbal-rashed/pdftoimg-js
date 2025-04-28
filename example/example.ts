@@ -1,38 +1,45 @@
 import fs from "fs";
-import { pdfToImg } from "../src/index";
 import path from "path";
+import { pdfToImg } from "../src/index";
 
-async function test() {
-  console.log("🔍 test() starting…");
+async function runExample() {
+  console.log("🔍 Starting PDF to Image conversion...");
+
+  const OUT_DIR = path.join(__dirname, "output");
+  const PDF_FILE = path.join(__dirname, "example.pdf");
 
   try {
-    const OUT_DIR_PATH = path.join(__dirname, "output");
-    if (!fs.existsSync(OUT_DIR_PATH)) {
-      fs.mkdirSync(OUT_DIR_PATH);
+    // Ensure output directory exists
+    if (!fs.existsSync(OUT_DIR)) {
+      fs.mkdirSync(OUT_DIR, { recursive: true });
+      console.log(`📁 Created output directory at: ${OUT_DIR}`);
     }
 
-    const pdfData = fs.readFileSync(path.join(__dirname, "example.pdf"));
+    // Read PDF file
+    const pdfBuffer = fs.readFileSync(PDF_FILE);
 
-    const imgs = await pdfToImg(pdfData, {
-      scale: 2,
-    });
+    // Convert PDF to images
+    const images = await pdfToImg(pdfBuffer, { scale: 2 });
 
-    for (let i = 0; i < imgs.length; i++) {
-      const img = imgs[i];
-      const base64Data = img.replace(/^data:image\/(png|jpg);base64,/, "");
-      fs.writeFileSync(
-        path.join(__dirname, "output", "test" + i + ".png"),
-        base64Data,
-        { encoding: "base64" }
-      );
-    }
+    // Save images
+    await Promise.all(
+      images.map((base64Img, index) => {
+        const cleanedBase64 = base64Img.replace(
+          /^data:image\/(png|jpeg);base64,/,
+          "",
+        );
+        const outputFilePath = path.join(OUT_DIR, `page-${index + 1}.png`);
+        return fs.promises.writeFile(outputFilePath, cleanedBase64, "base64");
+      }),
+    );
 
-    console.log("✅ singlePdfToImg succeeded, outsize");
-  } catch (err) {
-    console.error("❌ test() threw:", err);
+    console.log(
+      `✅ Successfully converted ${images.length} page(s). Output saved in: ${OUT_DIR}`,
+    );
+  } catch (error) {
+    console.error("❌ Error during PDF to Image conversion:", error);
+    process.exit(1);
   }
 }
 
-test().catch((err) => {
-  console.error("‼ unhandled rejection in test():", err);
-});
+runExample();

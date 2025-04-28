@@ -97,19 +97,20 @@ interface Options {
 Command-line support to batch convert PDFs easily!
 
 ```bash
-pdftoimg -i <input> [-o <output>] [-t <imgType>] [-s <scale>] [-p <pages>] [-n <template>]
+pdftoimg -i <input> [-o <output>] [-t <imgType>] [-s <scale>] [-p <pages>] [-n <template>] [-ps <password>]
 ```
 
 ### CLI Options
 
-| Option          | Type     | Description                                                                |
-| :-------------- | :------- | :------------------------------------------------------------------------- |
-| `-i, --input`   | `string` | (Required) Input PDF path.                                                 |
-| `-o, --out`     | `string` | Output directory (default: current directory).                             |
-| `-t, --imgType` | `string` | `png` or `jpg` (default: png).                                             |
-| `-s, --scale`   | `number` | Scale factor (default: 1.5).                                               |
-| `-p, --pages`   | `string` | `"all"`, `"firstPage"`, `"lastPage"`, page numbers, or ranges like `1..3`. |
-| `-n, --name`    | `string` | Filename template `{i}`, `{p}`, `{ext}`, `{f}` available.                  |
+| Option            | Type     | Description                                                                |
+| :---------------- | :------- | :------------------------------------------------------------------------- |
+| `-i, --input`     | `string` | (Required) Input PDF path.                                                 |
+| `-o, --out`       | `string` | Output directory (default: current directory).                             |
+| `-t, --imgType`   | `string` | `png` or `jpg` (default: png).                                             |
+| `-s, --scale`     | `number` | Scale factor (default: 1.5).                                               |
+| `-p, --pages`     | `string` | `"all"`, `"firstPage"`, `"lastPage"`, page numbers, or ranges like `1..3`. |
+| `-n, --name`      | `string` | Filename template `{i}`, `{p}`, `{ext}`, `{f}` available.                  |
+| `-ps, --password` | `string` | Password for the PDF file if encrypted.                                    |
 
 ### ⚡ Example CLI Commands
 
@@ -130,3 +131,7 @@ Save in a custom folder:
 ```bash
 pdftoimg -i ./example.pdf -o ./output
 ```
+
+## Contribution
+
+Contributions are welcome! Feel free to check out the [Contributing Guide](https://github.com/iqbal-rashed/pdftoimg-js/blob/main/.github/contributing.md) before making a pull request.

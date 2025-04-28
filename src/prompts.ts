@@ -38,6 +38,10 @@ program
   .option(
     "-n, --name <template>",
     "Naming template for output files (use {i} for index, {p} for page number, {ext} for extension, {f} for filename)",
+  )
+  .option(
+    "-ps, --password <password>",
+    "Password for the PDF file if encrypted",
   );
 
 export interface CLIOptions {
@@ -47,6 +51,7 @@ export interface CLIOptions {
   scale: string | number;
   pages: string | number;
   name?: string;
+  password?: string;
 }
 
 export function validatePrompts(opts: CLIOptions) {
@@ -58,5 +63,13 @@ export function validatePrompts(opts: CLIOptions) {
 
   const nameTemplate = validateNameTemplate(inputPath, opts.name);
 
-  return { inputPath, outputPath, imgType, scale, pages, nameTemplate };
+  return {
+    inputPath,
+    outputPath,
+    imgType,
+    scale,
+    pages,
+    nameTemplate,
+    password: opts.password,
+  };
 }

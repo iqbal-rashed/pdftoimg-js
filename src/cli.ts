@@ -16,6 +16,9 @@ async function init() {
       imgType: opts.imgType,
       scale: opts.scale,
       pages: opts.pages,
+      documentOptions: {
+        password: opts.password,
+      },
     });
 
     const pagesArray = getPagesArray(opts.pages, images.length);
