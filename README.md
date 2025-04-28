@@ -1,3 +1,7 @@
+> **Exciting News: Version 2 Has Arrived! 🎉**  
+> This release is still in beta, so we welcome your feedback and feature requests.  
+> If you encounter any bugs, please report them by opening an issue on our [GitHub repository](https://github.com/iqbal-rashed/pdftoimg-js/issues).
+
 # PDFtoIMG-JS
 
 **PDFtoIMG-JS** is a powerful JavaScript library for converting **PDF file/files into images** (PNG or JPG).
