@@ -1,7 +1,7 @@
 {
   "name": "pdftoimg-js",
   "description": "A javascript library that help to convert pdf to img in both platform nodejs and browser",
-  "version": "0.2.0",
+  "version": "0.2.2",
   "license": "MIT",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
@@ -28,7 +28,22 @@
     "example": "tsx example/example.ts",
     "prepare": "husky"
   },
-  "keywords": [],
+  "keywords": [
+    "pdftoimg-js",
+    "pdftoimg",
+    "pdf2img",
+    "pdf to image",
+    "pdf converter",
+    "pdf to png",
+    "pdf to jpg",
+    "pdf to image nodejs",
+    "pdf to image browser",
+    "pdfjs",
+    "javascript pdf converter",
+    "nodejs pdf to image",
+    "browser pdf to image",
+    "typescript pdf library"
+  ],
   "author": "Rashed Iqbal <dev.rashediqbal@gmail.com>",
   "repository": {
     "type": "git",

@@ -19,7 +19,7 @@ export default defineConfig([
     shims: true,
   },
   {
-    entry: ["src/browser/browser.ts"],
+    entry: ["src/browser.ts"],
     format: ["cjs", "esm"],
     splitting: false,
     dts: true,

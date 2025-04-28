@@ -1,6 +1,6 @@
 import { PDFDocumentProxy } from "pdfjs-dist/types/src/display/api";
-import { Options, PdfSrc, ReturnType } from "../types";
-import { defaultOptions, getPagesArray, isTypedArrayStrict } from "../utils";
+import { Options, PdfSrc, ReturnType } from "./types";
+import { defaultOptions, getPagesArray, isTypedArrayStrict } from "./utils";
 
 export function pdfToImg<O extends Options, S extends PdfSrc | PdfSrc[]>(
   src: S,
