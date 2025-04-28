@@ -1,133 +1,132 @@
-<img src="https://github.com/iqbal-rashed/pdftoimg-js/raw/main/logo.png">
+# PDFtoIMG-JS
 
-> Important Note: This is the first release of the library, so if you encounter any issues, please submit them. Your feedback is greatly appreciated. Contributors are also welcome!
+**PDFtoIMG-JS** is a powerful JavaScript library for converting **PDF file/files into images** (PNG or JPG).
+It supports both **Node.js** and **browser environments**, making it ideal for a wide range of use cases — including integration with popular frameworks such as **React**, **Next.js**, **Vue**, and more.
 
-# **PDF TO IMG - _A javascript library_**
+## ✨ Features
 
-[<img src="https://img.shields.io/badge/PDF TO IMG - JS-010101?&style=for-the-badge&logo=Npm"/>](https://www.npmjs.com/package/pdftoimg-js)
+- 📚 Supports **single** and **multiple** PDFs.
+- 🎯 Choose specific **pages** (`all`, `firstPage`, `lastPage`, page numbers, or ranges like `1..3`).
+- 🎨 Output images as **PNG** or **JPG** formats.
+- 🔥 Compatible with **React**, **Next.js**, **Vue**, etc.
+- 🛠 Fine control over **scale** and **output options**.
+- 💻 Browser runtime automatically uses **HTML5 Canvas** rendering.
+- 🧹 CLI ready for quick batch processing in **Node.js**.
 
-PDFtoIMG-JS is a powerful JavaScript library for converting PDF file/files to images. It supports both Node.js and browser environments, including popular frameworks such as React and Next.js.This library supports multiple PDF files and offers dynamic TypeScript types, making it ideal for a wide range of applications.
-
-**This library is powered by Mozilla's [PDF.js](https://github.com/mozilla/pdf.js)**
-
-## **Installation**
+## 📦 Installation
 
 ```bash
 npm install pdftoimg-js
 ```
 
-## **Getting Started**
+## 🛠 Basic Usage
 
-The library returns an array of base64-encoded image objects by default, where each object represents an image in PNG format.
+#### 🚀 Example (Node.js Script)
 
-### Node.js
+```ts
+import { pdfToImg } from "pdftoimg-js";
 
-Here is an example of how to use pdftoimg-js in a Node.js application:
+const images = await pdfToImg("example.pdf", {
+  pages: "firstPage",
+  imgType: "jpg",
+  scale: 2,
+});
 
-```javascript
-// typescript
-import PdfToImg from "pdftoimg-js";
-// commonjs
-const { PdfToImg } = require("pdftoimg-js");
-
-(async () => {
-    const img = await PdfToImg("example.pdf");
-
-    console.log(img); // Array of base64 strings
-})();
+console.log(images); // => Base64 encoded JPG image
 ```
 
-### Browser - React / Nextjs
+#### 📝 Example (Browser)
 
-Here is an example of how to use pdftoimg-js in a web browser:
+```ts
+import { pdfToImg } from "pdftoimg-js/browser";
 
-```javascript
-import PdfToImg from "pdftoimg-js/browser";
+const fileInput = document.getElementById("pdfInput");
 
-(async () => {
-    const response = await fetch("example.pdf");
-    const pdf = await response.arrayBuffer();
-    const images = await PdfToImg(pdf);
+fileInput.addEventListener("change", async (e) => {
+  const file = e.target.files[0];
+  const images = await pdfToImg(URL.createObjectURL(file));
 
-    console.log(img); // Array of base64
-})();
+  images.forEach((imgSrc) => {
+    const img = document.createElement("img");
+    img.src = imgSrc;
+    document.body.appendChild(img);
+  });
+});
 ```
 
-### Customization
+## 📖 API Reference
 
-You can customize the library to return images with specific size, image type, and return type using the following TypeScript or CommonJS code:
+### `pdfToImg(src, options?)`
 
-```javascript
-// typescript
-import PdfToImg from "pdftoimg";
-// commonjs
-const { PdfToImg } = require("pdftoimg");
+Convert PDF(s) to images.
 
-(async () => {
-    const pdf = fs.readFileSync(path.join(__dirname, "example.pdf"));
+| Parameter | Type                                        | Description                     |
+| :-------- | :------------------------------------------ | :------------------------------ |
+| `src`     | `string, URL, Uint8Array, or Array of Each` | PDF file(s) input source.       |
+| `options` | `Partial<Options>`                          | (Optional) Conversion settings. |
 
-    const allPages = await PdfToImg(pdf, {
-        scale: 1.5, // accept only number
-        returnType: "base64", // accept "base64" and "buffer"
-        imgType: "jpg", // accept "png" and "jpg"
-        pages: "all",
-    });
+✅ **Returns**:
 
-    console.log(allPages); // Array of base64 string
+- If `pages` is a single page (`firstPage`, `lastPage`, or a number) ➔ Single image.
+- Otherwise ➔ Array of images.
 
-    const singlePage = await PdfToImg(pdf, {
-        scale: 1.5, // accept only number
-        returnType: "buffer", // accept "base64" and "buffer"
-        imgType: "jpg", // accept "png" and "jpg"
-        pages: "firstPage",
-    });
+### Options (`Options` Interface)
 
-    console.log(singlePage); // Buffer
-})();
+```ts
+interface Options {
+  imgType?: "png" | "jpg"; // Default: "png"
+  scale?: number; // Default: 1.5
+  pages?: PagesType; // "all" | "firstPage" | "lastPage" | number | number[] | { startPage, endPage }
+  documentOptions?: DocumentInitParameters; // (Optional) More PDF.js config.
+}
 ```
 
-<br/>
+### 🖽 Browser Support
 
-## **PdfToImg API**
+- Auto-detects browser environment.
+- Uses **Canvas API** for rendering pages.
+- Sets **worker** dynamically from CDN:
+  ```ts
+  pdfjsLib.GlobalWorkerOptions.workerSrc =
+    "//cdnjs.cloudflare.com/ajax/libs/pdf.js/4.8.69/pdf.worker.min.mjs";
+  ```
+- Returns **base64 DataURL** for each page.
 
-### PdfToImg(file, options)
+## 👡 CLI Usage (Node.js Only)
 
-Initialize PDF to image conversion by supplying a input file and options
+Command-line support to batch convert PDFs easily!
 
-#### file - accept the following input file types:
+```bash
+pdftoimg -i <input> [-o <output>] [-t <imgType>] [-s <scale>] [-p <pages>] [-n <template>]
+```
 
--   Node.js: `Buffer`, `URL`, `string`, `string[]`, `Buffer[]`, and `URL[]`
--   Browser: `ArrayBuffer`, `URL`, `File`, `File[]`, `FileList`, `string[]`, and ArrayBuffer[]
+### CLI Options
 
-#### options - An object containing the following properties:
+| Option          | Type     | Description                                                                |
+| :-------------- | :------- | :------------------------------------------------------------------------- |
+| `-i, --input`   | `string` | (Required) Input PDF path.                                                 |
+| `-o, --out`     | `string` | Output directory (default: current directory).                             |
+| `-t, --imgType` | `string` | `png` or `jpg` (default: png).                                             |
+| `-s, --scale`   | `number` | Scale factor (default: 1.5).                                               |
+| `-p, --pages`   | `string` | `"all"`, `"firstPage"`, `"lastPage"`, page numbers, or ranges like `1..3`. |
+| `-n, --name`    | `string` | Filename template `{i}`, `{p}`, `{ext}`, `{f}` available.                  |
 
--   `scale` - A number representing the scale of the images to be generated. Default is `1`.
--   `imgType` - A string representing the type of the images to be generated. The accepted values are `"png"` and `"jpg"`. Default is `"png"`.
--   `returnType` - A string representing the type of the output to be generated. The accepted values are `"base64"`, `"buffer"` and (`"blob"` browser only). Default is `"base64"`.
--   `flat` - A boolean that can be used to flatten the array of image data returned (Multiple pdf only). Default is `false`.
--   `pages` - A string, number, number array, or object that specifies the page or pages to convert. The available options are:
-    -   `A number`: Convert the specified page number to an image.
-    -   `"firstPage"`: Convert the first page to an image.
-    -   `"lastPage"`: Convert the last page to an image.
-    -   `"all"`: Convert all pages to images.
-    -   `An array of numbers`: Convert the specified page numbers to images.
-    -   `{ startPage: number, endPage: number }`:Convert the pages between the specified start and end page numbers to images. Default is "all"
+### ⚡ Example CLI Commands
 
-pdftoimg-js is a powerful and flexible library for converting PDF files to images in JavaScript. Whether you are working with Node.js or in the browser, pdftoimg-js can help you get the job done quickly and easily.
+Convert **first page** to PNG:
 
-<br/>
+```bash
+pdftoimg -i ./example.pdf -p firstPage
+```
 
-## Contributing and Supporting
+Convert **pages 1 to 3** to JPG:
 
-If you'd like to contribute, please do submit a pull request or atleast help me to fix docs grammatical issue
+```bash
+pdftoimg -i ./example.pdf -t jpg -p 1..3
+```
 
--   Fork it!
--   Create your feature branch: `git checkout -b my-new-feature`
--   Add your changes: `git add .`
--   Commit your changes: `git commit -am 'Add some feature'`
--   Push to the branch: `git push origin my-new-feature`
--   Submit a pull request :sunglasses:
+Save in a custom folder:
 
-In case you want support my work
-
-[!["Buy Me A Coffee"](https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png)](https://buymeacoffee.com/rashed.iqbal)
+```bash
+pdftoimg -i ./example.pdf -o ./output
+```
