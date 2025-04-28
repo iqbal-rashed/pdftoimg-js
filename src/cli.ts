@@ -23,7 +23,7 @@ async function init() {
     const saveImage = async (
       img: Buffer | string,
       pageNumber: number,
-      index: number
+      index: number,
     ) => {
       const fileName = opts.nameTemplate
         .replace(/{i}/g, (index + 1).toString())

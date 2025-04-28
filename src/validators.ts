@@ -33,7 +33,7 @@ function expandRange(value: string): number[] {
   const [start, end] = value.split("..").map(Number);
   if (isNaN(start) || isNaN(end) || start > end || start <= 0) {
     throw new Error(
-      "Invalid range format or range cannot include zero/negative numbers. Example: 1..3"
+      "Invalid range format or range cannot include zero/negative numbers. Example: 1..3",
     );
   }
   return Array.from({ length: end - start + 1 }, (_, i) => start + i);
@@ -62,7 +62,7 @@ export function validateNameTemplate(inputPath: string, value?: string) {
       !value.includes("{ext}")
     ) {
       throw new Error(
-        "Name template must include at least one of {i}, {p}, and ends with .{ext}"
+        "Name template must include at least one of {i}, {p}, and ends with .{ext}",
       );
     }
     if (!value.endsWith(".{ext}")) {

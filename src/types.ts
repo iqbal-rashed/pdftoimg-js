@@ -31,5 +31,5 @@ export type PdfSrc = string | URL | TypedArray;
 
 export type ReturnType<
   O extends Options,
-  S extends PdfSrc | PdfSrc[]
+  S extends PdfSrc | PdfSrc[],
 > = S extends PdfSrc[] ? PerSrcReturn<O>[] : PerSrcReturn<O>;

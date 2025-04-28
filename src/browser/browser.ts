@@ -4,7 +4,7 @@ import { defaultOptions, getPagesArray, isTypedArrayStrict } from "../utils";
 
 export function pdfToImg<O extends Options, S extends PdfSrc | PdfSrc[]>(
   src: S,
-  options?: O
+  options?: O,
 ): Promise<ReturnType<O, S>> {
   const convert = async (file: PdfSrc) => await singlePdfToImg(file, options);
 
@@ -34,7 +34,7 @@ export async function singlePdfToImg(src: PdfSrc, opt: Partial<Options> = {}) {
   const pageNums: number[] = getPagesArray(requiredOpt.pages, numPages);
 
   const images = await Promise.all(
-    pageNums.map((n) => pageToImg(pdfDoc, n, requiredOpt))
+    pageNums.map((n) => pageToImg(pdfDoc, n, requiredOpt)),
   );
 
   return requiredOpt.pages === "firstPage" ||
@@ -47,7 +47,7 @@ export async function singlePdfToImg(src: PdfSrc, opt: Partial<Options> = {}) {
 async function pageToImg(
   pdfDoc: PDFDocumentProxy,
   pageNum: number,
-  opt: Required<Options>
+  opt: Required<Options>,
 ): Promise<string | Buffer> {
   const page = await pdfDoc.getPage(pageNum);
   const viewport = page.getViewport({ scale: opt.scale });

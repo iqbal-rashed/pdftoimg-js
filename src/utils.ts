@@ -17,20 +17,20 @@ export function getPagesArray(pages: PagesType, numPages: number) {
   return pages === "firstPage"
     ? [1]
     : pages === "lastPage"
-    ? [numPages]
-    : typeof pages === "number"
-    ? [Math.max(1, pages)]
-    : Array.isArray(pages)
-    ? pages.length
-      ? pages
-      : [1]
-    : typeof pages === "object"
-    ? rangeToArr(pages.startPage ?? 1, pages.endPage ?? numPages)
-    : rangeToArr(1, numPages);
+      ? [numPages]
+      : typeof pages === "number"
+        ? [Math.max(1, pages)]
+        : Array.isArray(pages)
+          ? pages.length
+            ? pages
+            : [1]
+          : typeof pages === "object"
+            ? rangeToArr(pages.startPage ?? 1, pages.endPage ?? numPages)
+            : rangeToArr(1, numPages);
 }
 
 export function isTypedArrayStrict(
-  value: unknown
+  value: unknown,
 ): value is
   | Int8Array
   | Uint8Array

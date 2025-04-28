@@ -18,26 +18,26 @@ program
   .requiredOption("-i, --input <input>", "Input PDF file path")
   .option(
     "-o, --out <outputDir>",
-    "Directory to save output images (default: current directory)"
+    "Directory to save output images (default: current directory)",
   )
   .option(
     "-t, --imgType <type>",
     "Image type: png or jpg",
-    String(defaultOptions.imgType)
+    String(defaultOptions.imgType),
   )
   .option(
     "-s, --scale <scale>",
     "Scale factor (positive number)",
-    String(defaultOptions.scale)
+    String(defaultOptions.scale),
   )
   .option(
     "-p, --pages <pages...>",
     "Pages to convert: 'all', 'firstPage', 'lastPage', numbers or ranges like 1..3",
-    String(defaultOptions.pages)
+    String(defaultOptions.pages),
   )
   .option(
     "-n, --name <template>",
-    "Naming template for output files (use {i} for index, {p} for page number, {ext} for extension, {f} for filename)"
+    "Naming template for output files (use {i} for index, {p} for page number, {ext} for extension, {f} for filename)",
   );
 
 export interface CLIOptions {
