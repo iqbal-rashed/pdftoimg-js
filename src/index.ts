@@ -1,6 +1,6 @@
+import { PDFDocumentProxy } from "pdfjs-dist/types/src/display/api";
 import { CMAP_URL, STANDARD_FONT_DATA_URL } from "./constant";
 import { Options, PdfSrc, ReturnType } from "./types";
-import { PDFDocumentProxy } from "pdfjs-dist/types/src/display/api";
 import { defaultOptions, getPagesArray, isTypedArrayStrict } from "./utils";
 
 export function pdfToImg<O extends Options, S extends PdfSrc | PdfSrc[]>(
@@ -61,7 +61,12 @@ async function pageToImg(
     viewport.height,
   );
 
-  const renderTask = page.render({ canvasContext: context, viewport });
+  const renderTask = page.render({
+    canvasContext: context,
+    viewport,
+    background: opt.background || "rgb(255,255,255)",
+    intent: opt.intent || "display",
+  });
 
   await renderTask.promise;
 

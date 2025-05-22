@@ -19,7 +19,11 @@ async function runExample() {
     const pdfBuffer = fs.readFileSync(PDF_FILE);
 
     // Convert PDF to images
-    const images = await pdfToImg(pdfBuffer, { scale: 2 });
+    const images = await pdfToImg(pdfBuffer, {
+      scale: 2,
+      background: "white",
+      intent: "print",
+    });
 
     // Save images
     await Promise.all(

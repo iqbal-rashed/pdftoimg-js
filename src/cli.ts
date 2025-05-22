@@ -1,8 +1,8 @@
+import fs from "fs";
 import path from "path";
 import { pdfToImg } from ".";
 import { program, validatePrompts } from "./prompts";
 import { getPagesArray } from "./utils";
-import fs from "fs";
 
 program.parse(process.argv);
 
@@ -16,6 +16,8 @@ async function init() {
       imgType: opts.imgType,
       scale: opts.scale,
       pages: opts.pages,
+      intent: opts.intent as "display" | "print" | "any",
+      background: opts.background,
       documentOptions: {
         password: opts.password,
       },

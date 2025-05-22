@@ -1,5 +1,5 @@
-import path from "path";
 import fs from "fs";
+import path from "path";
 
 export function validateInput(value: string) {
   const inputPath = path.isAbsolute(value)
@@ -86,4 +86,20 @@ export function validateOutput(out?: string) {
     fs.mkdirSync(outputPath, { recursive: true });
   }
   return outputPath;
+}
+
+export function validateIntent(value: string) {
+  if (!["display", "print", "any"].includes(value)) {
+    throw new Error("Intent must be 'display', 'print', or 'any'.");
+  }
+  return value;
+}
+
+export function validateBackground(value: string) {
+  // For CLI, we'll only accept string values for background
+  // CanvasGradient and CanvasPattern are not applicable in CLI context
+  if (!value) {
+    return "rgb(255,255,255)"; // Default background
+  }
+  return value;
 }
