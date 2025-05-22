@@ -34,6 +34,7 @@ const images = await pdfToImg("example.pdf", {
   pages: "firstPage",
   imgType: "jpg",
   scale: 2,
+  background: "white",
 });
 
 console.log(images); // => Base64 encoded JPG image
@@ -80,6 +81,8 @@ Convert PDF(s) to images.
 interface Options {
   imgType?: "png" | "jpg"; // Default: "png"
   scale?: number; // Default: 1.5
+  background?: string | CanvasGradient | CanvasPattern; // Default: "rgb(255,255,255)"
+  intent?: "display" | "print" | "any"; // Default: "display"
   pages?: PagesType; // "all" | "firstPage" | "lastPage" | number | number[] | { startPage, endPage }
   documentOptions?: DocumentInitParameters; // (Optional) More PDF.js config.
 }
@@ -101,20 +104,22 @@ interface Options {
 Command-line support to batch convert PDFs easily!
 
 ```bash
-pdftoimg -i <input> [-o <output>] [-t <imgType>] [-s <scale>] [-p <pages>] [-n <template>] [-ps <password>]
+pdftoimg -i <input> [-o <output>] [-t <imgType>] [-s <scale>] [-p <pages>] [-n <template>] [-ps <password>] [-b <background>] [-in <intent>]
 ```
 
 ### CLI Options
 
-| Option            | Type     | Description                                                                |
-| :---------------- | :------- | :------------------------------------------------------------------------- |
-| `-i, --input`     | `string` | (Required) Input PDF path.                                                 |
-| `-o, --out`       | `string` | Output directory (default: current directory).                             |
-| `-t, --imgType`   | `string` | `png` or `jpg` (default: png).                                             |
-| `-s, --scale`     | `number` | Scale factor (default: 1.5).                                               |
-| `-p, --pages`     | `string` | `"all"`, `"firstPage"`, `"lastPage"`, page numbers, or ranges like `1..3`. |
-| `-n, --name`      | `string` | Filename template `{i}`, `{p}`, `{ext}`, `{f}` available.                  |
-| `-ps, --password` | `string` | Password for the PDF file if encrypted.                                    |
+| Option             | Type     | Description                                                                |
+| :----------------- | :------- | :------------------------------------------------------------------------- |
+| `-i, --input`      | `string` | (Required) Input PDF path.                                                 |
+| `-o, --out`        | `string` | Output directory (default: current directory).                             |
+| `-t, --imgType`    | `string` | `png` or `jpg` (default: png).                                             |
+| `-s, --scale`      | `number` | Scale factor (default: 1.5).                                               |
+| `-b, --background` | `string` | Background color (e.g., 'white', 'rgba(255,255,255,0.5)', '#ffffff').      |
+| `-in, --intent`    | `string` | Rendering intent: 'display', 'print', or 'any' (default: 'display').       |
+| `-p, --pages`      | `string` | `"all"`, `"firstPage"`, `"lastPage"`, page numbers, or ranges like `1..3`. |
+| `-n, --name`       | `string` | Filename template `{i}`, `{p}`, `{ext}`, `{f}` available.                  |
+| `-ps, --password`  | `string` | Password for the PDF file if encrypted.                                    |
 
 ### ⚡ Example CLI Commands
 
@@ -134,6 +139,18 @@ Save in a custom folder:
 
 ```bash
 pdftoimg -i ./example.pdf -o ./output
+```
+
+Convert with custom background and print intent:
+
+```bash
+pdftoimg -i ./example.pdf -b "white" -in print
+```
+
+Convert with transparent background:
+
+```bash
+pdftoimg -i ./example.pdf -b "rgba(255,255,255,0)"
 ```
 
 ## Contribution
