@@ -4,6 +4,8 @@ export const defaultOptions: Required<Options> = {
   imgType: "png",
   pages: "all",
   scale: 1.0,
+  background: "rgb(255,255,255)",
+  intent: "display",
   documentOptions: {},
 };
 

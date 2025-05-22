@@ -59,7 +59,12 @@ async function pageToImg(
   canvas.height = viewport.height;
   canvas.width = viewport.width;
 
-  const renderTask = page.render({ canvasContext, viewport });
+  const renderTask = page.render({
+    canvasContext,
+    viewport,
+    intent: opt.intent || "display",
+    background: opt.background || "rgb(255,255,255)",
+  });
 
   await renderTask.promise;
 

@@ -1,14 +1,16 @@
 import { Command } from "commander";
+import { PagesType } from "./types";
+import { defaultOptions } from "./utils";
 import {
+  validateBackground,
   validateImgType,
   validateInput,
+  validateIntent,
   validateNameTemplate,
   validateOutput,
   validatePages,
   validateScale,
 } from "./validators";
-import { defaultOptions } from "./utils";
-import { PagesType } from "./types";
 
 export const program = new Command();
 
@@ -42,6 +44,16 @@ program
   .option(
     "-ps, --password <password>",
     "Password for the PDF file if encrypted",
+  )
+  .option(
+    "-in, --intent <intent>",
+    "Rendering intent: 'display', 'print', or 'any'",
+    "display",
+  )
+  .option(
+    "-b, --background <color>",
+    "Background color (e.g., 'white', 'rgba(255,255,255,0.5)', '#ffffff')",
+    "rgb(255,255,255)",
   );
 
 export interface CLIOptions {
@@ -52,6 +64,8 @@ export interface CLIOptions {
   pages: string | number;
   name?: string;
   password?: string;
+  intent?: string;
+  background?: string;
 }
 
 export function validatePrompts(opts: CLIOptions) {
@@ -60,7 +74,8 @@ export function validatePrompts(opts: CLIOptions) {
   const imgType = validateImgType(opts.imgType) as "jpg" | "png";
   const scale = validateScale(String(opts.scale));
   const pages = validatePages(String(opts.pages)) as PagesType;
-
+  const intent = validateIntent(opts.intent || "display");
+  const background = validateBackground(opts.background || "rgb(255,255,255)");
   const nameTemplate = validateNameTemplate(inputPath, opts.name);
 
   return {
@@ -71,5 +86,7 @@ export function validatePrompts(opts: CLIOptions) {
     pages,
     nameTemplate,
     password: opts.password,
+    intent,
+    background,
   };
 }
